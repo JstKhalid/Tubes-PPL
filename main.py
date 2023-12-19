@@ -27,10 +27,7 @@ while True:
                     print("1. Tampilkan Semua Data \n2. Tambah Data \n3. Ubah Data \n4. Hapus Data \n5. Keluar Menu Admin \n")
                     pilih_admin = int(input("pilih menu: "))
                     if pilih_admin == 1:
-                        print("===== DATA MAKANAN =====")
-                        read_items(database_makanan)
-                        print("===== DATA MINUMAN =====")
-                        read_items(database_minuman)
+                        show_data(database_makanan,database_minuman)
                     elif pilih_admin == 2:
                         while True:
                             try:
@@ -52,7 +49,7 @@ while True:
                                 elif pilih_data == 3:
                                     break
                                 else:
-                                    print("Pilih Database dengan nomor 1 - 3")
+                                    print("Pilih Nomor 1 - 3")
                                     False
                             except ValueError:
                                 print("Program Hanya Memproses inputan angka, silahkan pilih lagi (1 - 4)")
@@ -65,7 +62,6 @@ while True:
                                 if pilih_update == 1:     
                                     read_items(database_makanan)
                                     id = int(input("Pilih Id data yang ingin diubah : "))
-                                    minuman = input("minuman    : ")
                                     harga = input("harga        : ")
                                     stock = input("stock        : ")
                                     response = update_item(id, {"harga": harga, "stock": stock}, database_makanan)
@@ -75,7 +71,6 @@ while True:
                                 elif pilih_update == 2:
                                     read_items(database_minuman)
                                     id = int(input("Pilih Id data yang ingin diubah : "))
-                                    minuman = input("minuman    : ")
                                     harga = input("harga        : ")
                                     stock = input("stock        : ")
                                     response = update_item(id, {"harga": harga, "stock": stock}, database_minuman)
@@ -85,7 +80,7 @@ while True:
                                 elif pilih_update == 3:
                                     break
                                 else:
-                                    print("Pilih Database dengan nomor 1 - 3") 
+                                    print("Pilih Nomor 1 - 3") 
                                     False
                             except ValueError:
                                 print("Program Hanya Memproses inputan angka, silahkan pilih lagi (1 - 4)")
@@ -112,7 +107,7 @@ while True:
                                 elif pilih_hapus == 3:
                                     break
                                 else:
-                                    print("Pilih Database dengan nomor 1 - 3") 
+                                    print("Pilih Nomor 1 - 3") 
                                     False
                             except ValueError:
                                 print("Program Hanya Memproses inputan angka, silahkan pilih lagi (1 - 4)")
