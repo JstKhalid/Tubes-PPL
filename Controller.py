@@ -29,4 +29,9 @@ def delete_item(item_id, database):
             return "Item deleted successfully"
     return "Item not found"
 
+def show_data(db_makanan, db_minuman):
+    print("===== DATA MAKANAN =====")
+    read_items(db_makanan)
+    print("===== DATA MINUMAN =====")
+    read_items(db_minuman)
 

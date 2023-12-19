@@ -27,10 +27,7 @@ while True:
                     print("1. Tampilkan Semua Data \n2. Tambah Data \n3. Ubah Data \n4. Hapus Data \n5. Keluar Menu Admin \n")
                     pilih_admin = int(input("pilih menu: "))
                     if pilih_admin == 1:
-                        print("===== DATA MAKANAN =====")
-                        read_items(database_makanan)
-                        print("===== DATA MINUMAN =====")
-                        read_items(database_minuman)
+                        show_data(database_makanan,database_minuman)
                     elif pilih_admin == 2:
                         while True:
                             try:
