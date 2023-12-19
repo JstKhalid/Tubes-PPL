@@ -1,7 +1,12 @@
 #FUNCTION CRUD ADMIN
-def create_item(makanan, minuman, harga, stock, database):
+def create_item_makanan( makanan, harga, stock, database):
     new_id = max(item['id'] for item in database) + 1 if database else 1
-    new_item = {"id": new_id, "makanan": makanan, "minuman": minuman, "harga": harga, "stock": stock}
+    new_item = {"id": new_id, "makanan": makanan, "harga": harga, "stock": stock}
+    database.append(new_item)
+
+def create_item_minuman( minuman, harga, stock, database):
+    new_id = max(item['id'] for item in database) + 1 if database else 1
+    new_item = {"id": new_id, "minuman": minuman, "harga": harga, "stock": stock}
     database.append(new_item)
 
   
@@ -24,4 +29,9 @@ def delete_item(item_id, database):
             return "Item deleted successfully"
     return "Item not found"
 
+def show_data(db_makanan, db_minuman):
+    print("===== DATA MAKANAN =====")
+    read_items(db_makanan)
+    print("===== DATA MINUMAN =====")
+    read_items(db_minuman)
 
