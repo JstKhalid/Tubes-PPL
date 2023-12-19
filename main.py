@@ -29,8 +29,22 @@ while(True):
                         harga = input("harga        : ")
                         stock = input("stock        : ")
                         create_item(makanan, minuman, harga, stock, database)
-                    else:
+                    elif pilih_admin == 3:
+                        read_items(database)
+                        id = int(input("Pilih Id data yang ingin diubah"))
+                        update_item(id, {"harga": 30000, "stock": 20}, database)
+                        print("===== DATA SETELAH UPDATE =====")
+                        read_items(database)
+                    elif pilih_admin == 4:
+                        read_items(database)
+                        id = int(input("Pilih Id data yang ingin di hapus : "))
+                        delete_item(id, database)
+                        print("===== DATA SETELAH DI HAPUS =====")
+                        read_items(database)
+                    elif pilih_admin == 5:
                         break 
+                    else:
+                        print("Masukan pilihan hanya dari 1 - 4")
                 except ValueError:
                     print("Program Hanya Memproses inputan angka, silahkan pilih lagi (1 - 4)")
         elif akses == 2:
