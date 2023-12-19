@@ -1,9 +1,15 @@
 from Controller import *
 
-database = [
-    {"id": 1, "makanan": "Nasi Goreng", "minuman": "Teh Manis", "harga": 25000, "stock": 10},
-    {"id": 2, "makanan": "Mie Ayam", "minuman": "Es Jeruk", "harga": 20000, "stock": 15},
+database_makanan = [
+    {"id": 1, "makanan": "Nasi Goreng", "harga": 25000, "stock": 10},
+    {"id": 2, "makanan": "Mie Ayam",  "harga": 20000, "stock": 15},
 ]
+
+database_minuman = [
+    {"id": 1, "minuman": "Teh Manis", "harga": 25000, "stock": 10},
+    {"id": 2, "minuman": "Es Jeruk", "harga": 20000, "stock": 15},
+]
+
 
 print("===== SELAMAT DATANG DI FOOD ORDERING APP =====")
 while(True):
@@ -21,26 +27,66 @@ while(True):
                     print("1. Tampilkan Semua Data \n2. Tambah Data \n3. Ubah Data \n4. Hapus Data \n5.Keluar Menu Admin \n")
                     pilih_admin = int(input("pilih menu: "))
                     if pilih_admin == 1:
-                        read_items(database)
+                        print("===== DATA MAKANAN =====")
+                        read_items(database_makanan)
+                        print("===== DATA MINUMAN =====")
+                        read_items(database_minuman)
                     elif pilih_admin == 2:
-                        print("Masukan data yang ingin di tambahkan")
-                        makanan = input("Makanan    : ")
-                        minuman = input("minuman    : ")
-                        harga = input("harga        : ")
-                        stock = input("stock        : ")
-                        create_item(makanan, minuman, harga, stock, database)
+                        print("PILIH DATA YANG INGIN DI BUAT")
+                        print("1. Data Makanan \n2. Data Minuman \n")
+                        pilih_data = int(input("Pilih no (1 - 2): "))
+                        if pilih_data == 1:
+                            makanan = input("Makanan    : ")
+                            harga = input("harga        : ")
+                            stock = input("stock        : ")
+                            create_item(makanan, harga, stock, database_makanan)
+                        elif pilih_data == 2:  
+                            minuman = input("minuman    : ")
+                            harga = input("harga        : ")
+                            stock = input("stock        : ")
+                            create_item(minuman, harga, stock, database_minuman)
+                        else:
+                            print("Pilih Database dengan nomor 1 - 2")
                     elif pilih_admin == 3:
-                        read_items(database)
-                        id = int(input("Pilih Id data yang ingin diubah"))
-                        update_item(id, {"harga": 30000, "stock": 20}, database)
-                        print("===== DATA SETELAH UPDATE =====")
-                        read_items(database)
+                        print("PILIH DATA YANG INGIN DI UBAH")
+                        print("1. Data Makanan \n2. Data Minuman")
+                        pilih_update = int(input("Pilih no (1 - 2): "))
+                        if pilih_update == 1:     
+                            read_items(database_makanan)
+                            id = int(input("Pilih Id data yang ingin diubah"))
+                            minuman = input("minuman    : ")
+                            harga = input("harga        : ")
+                            stock = input("stock        : ")
+                            update_item(id, {"harga": harga, "stock": stock}, database_makanan)
+                            print("===== DATA SETELAH UPDATE =====")
+                            read_items(database_makanan)
+                        if pilih_update == 2:
+                            read_items(database_makanan)
+                            id = int(input("Pilih Id data yang ingin diubah"))
+                            minuman = input("minuman    : ")
+                            harga = input("harga        : ")
+                            stock = input("stock        : ")
+                            update_item(id, {"harga": harga, "stock": stock}, database_minuman)
+                            print("===== DATA SETELAH UPDATE =====")
+                            read_items(database_minuman)
+                        else:
+                            print("Pilih Database dengan nomor 1 - 2") 
                     elif pilih_admin == 4:
-                        read_items(database)
-                        id = int(input("Pilih Id data yang ingin di hapus : "))
-                        delete_item(id, database)
-                        print("===== DATA SETELAH DI HAPUS =====")
-                        read_items(database)
+                        print("PILIH DATA YANG INGIN DI HAPUS")
+                        print("1. Data Makanan \n2. Data Minuman")
+                        pilih_hapus = int(input("Pilih no (1 - 2): "))
+                        if pilih_hapus == 1:
+                            read_items(database_makanan)
+                            id = int(input("Pilih Id data yang ingin di hapus : "))
+                            delete_item(id, database_makanan)
+                            print("===== DATA SETELAH DI HAPUS =====")
+                            read_items(database_makanan)
+                        if pilih_hapus == 2:
+                            read_items(database_makanan)
+                            id = int(input("Pilih Id data yang ingin di hapus : "))
+                            delete_item(id, database_minuman)
+                            print("===== DATA SETELAH DI HAPUS =====")
+                            read_items(database_minuman)
                     elif pilih_admin == 5:
                         break 
                     else:
