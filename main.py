@@ -12,7 +12,7 @@ database_minuman = [
 
 
 print("===== SELAMAT DATANG DI FOOD ORDERING APP =====")
-while(True):
+while True:
     print("="*50)
     print("AKSES APLIKASI")
     try:
@@ -21,10 +21,10 @@ while(True):
         if akses == 1:
             print("="*50)
             print("Signed in as Admin")
-            while(True):
+            while True:
                 print("===== MENU ADMIN =====")
                 try:
-                    print("1. Tampilkan Semua Data \n2. Tambah Data \n3. Ubah Data \n4. Hapus Data \n5.Keluar Menu Admin \n")
+                    print("1. Tampilkan Semua Data \n2. Tambah Data \n3. Ubah Data \n4. Hapus Data \n 5.Keluar Menu Admin \n")
                     pilih_admin = int(input("pilih menu: "))
                     if pilih_admin == 1:
                         print("===== DATA MAKANAN =====")
@@ -32,61 +32,84 @@ while(True):
                         print("===== DATA MINUMAN =====")
                         read_items(database_minuman)
                     elif pilih_admin == 2:
-                        print("PILIH DATA YANG INGIN DI BUAT")
-                        print("1. Data Makanan \n2. Data Minuman \n")
-                        pilih_data = int(input("Pilih no (1 - 2): "))
-                        if pilih_data == 1:
-                            makanan = input("Makanan    : ")
-                            harga = input("harga        : ")
-                            stock = input("stock        : ")
-                            create_item(makanan, harga, stock, database_makanan)
-                        elif pilih_data == 2:  
-                            minuman = input("minuman    : ")
-                            harga = input("harga        : ")
-                            stock = input("stock        : ")
-                            create_item(minuman, harga, stock, database_minuman)
-                        else:
-                            print("Pilih Database dengan nomor 1 - 2")
+                        while True:
+                            try:
+                                print("PILIH DATA YANG INGIN DI BUAT")
+                                print("1. Data Makanan \n2. Data Minuman \n3. kembali")
+                                pilih_data = int(input("Pilih no (1 - 3): "))
+                                if pilih_data == 1:
+                                    makanan = input("Makanan    : ")
+                                    harga = input("harga        : ")
+                                    stock = input("stock        : ")
+                                    create_item(makanan, harga, stock, database_makanan)
+                                elif pilih_data == 2:  
+                                    minuman = input("minuman    : ")
+                                    harga = input("harga        : ")
+                                    stock = input("stock        : ")
+                                    create_item(minuman, harga, stock, database_minuman)
+                                elif pilih_data == 3:
+                                    break
+                                else:
+                                    print("Pilih Database dengan nomor 1 - 3")
+                                    False
+                            except ValueError:
+                                print("Program Hanya Memproses inputan angka, silahkan pilih lagi (1 - 4)")
                     elif pilih_admin == 3:
-                        print("PILIH DATA YANG INGIN DI UBAH")
-                        print("1. Data Makanan \n2. Data Minuman")
-                        pilih_update = int(input("Pilih no (1 - 2): "))
-                        if pilih_update == 1:     
-                            read_items(database_makanan)
-                            id = int(input("Pilih Id data yang ingin diubah"))
-                            minuman = input("minuman    : ")
-                            harga = input("harga        : ")
-                            stock = input("stock        : ")
-                            update_item(id, {"harga": harga, "stock": stock}, database_makanan)
-                            print("===== DATA SETELAH UPDATE =====")
-                            read_items(database_makanan)
-                        if pilih_update == 2:
-                            read_items(database_makanan)
-                            id = int(input("Pilih Id data yang ingin diubah"))
-                            minuman = input("minuman    : ")
-                            harga = input("harga        : ")
-                            stock = input("stock        : ")
-                            update_item(id, {"harga": harga, "stock": stock}, database_minuman)
-                            print("===== DATA SETELAH UPDATE =====")
-                            read_items(database_minuman)
-                        else:
-                            print("Pilih Database dengan nomor 1 - 2") 
+                        while True:
+                            try:
+                                print("PILIH DATA YANG INGIN DI UBAH")
+                                print("1. Data Makanan \n2. Data Minuman \n3. kembali")
+                                pilih_update = int(input("Pilih no (1 - 3): "))
+                                if pilih_update == 1:     
+                                    read_items(database_makanan)
+                                    id = int(input("Pilih Id data yang ingin diubah"))
+                                    minuman = input("minuman    : ")
+                                    harga = input("harga        : ")
+                                    stock = input("stock        : ")
+                                    update_item(id, {"harga": harga, "stock": stock}, database_makanan)
+                                    print("===== DATA SETELAH UPDATE =====")
+                                    read_items(database_makanan)
+                                elif pilih_update == 2:
+                                    read_items(database_minuman)
+                                    id = int(input("Pilih Id data yang ingin diubah"))
+                                    minuman = input("minuman    : ")
+                                    harga = input("harga        : ")
+                                    stock = input("stock        : ")
+                                    update_item(id, {"harga": harga, "stock": stock}, database_minuman)
+                                    print("===== DATA SETELAH UPDATE =====")
+                                    read_items(database_minuman)
+                                elif pilih_update == 3:
+                                    break
+                                else:
+                                    print("Pilih Database dengan nomor 1 - 3") 
+                                    False
+                            except ValueError:
+                                print("Program Hanya Memproses inputan angka, silahkan pilih lagi (1 - 4)")
                     elif pilih_admin == 4:
-                        print("PILIH DATA YANG INGIN DI HAPUS")
-                        print("1. Data Makanan \n2. Data Minuman")
-                        pilih_hapus = int(input("Pilih no (1 - 2): "))
-                        if pilih_hapus == 1:
-                            read_items(database_makanan)
-                            id = int(input("Pilih Id data yang ingin di hapus : "))
-                            delete_item(id, database_makanan)
-                            print("===== DATA SETELAH DI HAPUS =====")
-                            read_items(database_makanan)
-                        if pilih_hapus == 2:
-                            read_items(database_makanan)
-                            id = int(input("Pilih Id data yang ingin di hapus : "))
-                            delete_item(id, database_minuman)
-                            print("===== DATA SETELAH DI HAPUS =====")
-                            read_items(database_minuman)
+                        while True:
+                            try:
+                                print("PILIH DATA YANG INGIN DI HAPUS")
+                                print("1. Data Makanan \n2. Data Minuman \n3. kembali")
+                                pilih_hapus = int(input("Pilih no (1 - 3): "))
+                                if pilih_hapus == 1:
+                                    read_items(database_makanan)
+                                    id = int(input("Pilih Id data yang ingin di hapus : "))
+                                    delete_item(id, database_makanan)
+                                    print("===== DATA SETELAH DI HAPUS =====")
+                                    read_items(database_makanan)
+                                elif pilih_hapus == 2:
+                                    read_items(database_minuman)
+                                    id = int(input("Pilih Id data yang ingin di hapus : "))
+                                    delete_item(id, database_minuman)
+                                    print("===== DATA SETELAH DI HAPUS =====")
+                                    read_items(database_minuman)
+                                elif pilih_hapus == 3:
+                                    break
+                                else:
+                                    print("Pilih Database dengan nomor 1 - 3") 
+                                    False
+                            except ValueError:
+                                print("Program Hanya Memproses inputan angka, silahkan pilih lagi (1 - 4)")
                     elif pilih_admin == 5:
                         break 
                     else:
