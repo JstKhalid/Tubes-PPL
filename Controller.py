@@ -1,73 +1,53 @@
-#FUNCTION CRUD ADMIN
-def create_item_makanan( makanan, harga, stock, database):
-    new_id = max(item['id'] for item in database) + 1 if database else 1
-    new_item = {"id": new_id, "type":"makanan","nama": makanan, "harga": harga, "stock": stock}
-    database.append(new_item)
+from datetime import datetime
 
-def create_item_minuman( minuman, harga, stock, database):
-    new_id = max(item['id'] for item in database) + 1 if database else 1
-    new_item = {"id": new_id,"type":"minumam","nama": minuman, "harga": harga, "stock": stock}
-    database.append(new_item)
+def enter_parking_area(parking_database):
+    plate_number = input("Enter vehicle number plate: ")
+    entry_time = datetime.now().strftime("%H:%M:%S")
+    parking_record = {"noplat": plate_number, "waktu_masuk": entry_time, "waktu_keluar": None, "biaya": 0}
+    parking_database.append(parking_record)
+    print("Silahkan masuk")
 
-  
-def read_items(database):
-    for item in database:
-        print(item)
-  
-def update_item(item_id, new_data, database):
-    for item in database:
-        if item['id'] == item_id:
-            item.update(new_data)
-            return "Item updated successfully"
-    
-    return "Item not found"
+def exit_parking_area(parking_database, PARKING_RATE, PENALTY_THRESHOLD_1, PENALTY_RATE_1, PENALTY_THRESHOLD_2, PENALTY_RATE_2):
+    plate_number = input("Enter vehicle number plate: ")
+    for record in parking_database:
+        if record["noplat"] == plate_number and record["waktu_keluar"] is None:
+            exit_time = datetime.now().strftime("%H:%M:%S")
+            record["waktu_keluar"] = exit_time
 
-def delete_item(item_id, database):
-    for i, item in enumerate(database):
-        if item['id'] == item_id:
-            del database[i]
-            return "Item deleted successfully"
-    return "Item not found"
+            # Calculate parking duration in minutes
+            fmt = "%H:%M:%S"
+            masuk = datetime.strptime(record["waktu_masuk"], fmt)
+            keluar = datetime.strptime(exit_time, fmt)
+            parking_duration = (keluar - masuk).seconds // 60
 
-def show_data(db_makanan, db_minuman,item_type=0):
+            # Ensure parking duration is calculated correctly if it spans past midnight
+            if keluar < masuk:
+                parking_duration += 24 * 60  # Add 24 hours in minutes
 
-    if item_type == 1:
-        print("\n===== MAKANAN =====")
-        for row in db_makanan:
-            print(f"{row['id']}. {row['nama']} | Harga : Rp {row['harga']},00 | Stok : {row['stock']}")
-    elif item_type == 2:
-        print(" \n===== MINUMAN =====")
-        for row in db_minuman:
-            print(f"{row['id']}. {row['nama']} | Harga : Rp {row['harga']},00 | Stok : {row['stock']}")
-    elif item_type == 0:
-        print("\n===== MAKANAN =====")
-        for row in db_makanan:
-            print(f"{row['id']}. {row['nama']} | Harga : Rp {row['harga']},00 | Stok : {row['stock']}")
-        print(" \n===== MINUMAN =====")
-        for row in db_minuman:
-            print(f"{row['id']}. {row['nama']} | Harga : Rp {row['harga']},00 | Stok : {row['stock']}")
+            # Apply minimum parking duration
+            parking_duration = max(1, parking_duration)
 
-def add_item (db_makanan, db_minuman,item_type,cart):
-        try:
-            show_data(db_makanan,db_minuman,item_type)
+            # Calculate fees and penalties
+            record["biaya"] = parking_duration * PARKING_RATE
+            if parking_duration > PENALTY_THRESHOLD_1:
+                penalty_rate = PENALTY_RATE_1 if parking_duration <= PENALTY_THRESHOLD_2 else PENALTY_RATE_2
+                record["biaya"] += record["biaya"] * penalty_rate
 
-            if item_type == 1:
-                type = "makanan"
-                database = db_makanan
-            elif item_type == 2:
-                type = "minuman"
-                database = db_minuman
-            item_no = int(input(f"Pilih {type} (Nomor):"))
-            selected_item = [item for item in database if item['id'] == item_no][0]
-            item_id =  selected_item['id'] 
+            print(f"Biaya parkir: Rp {record['biaya']}")
+            payment = int(input("Masukkan nominal pembayaran: "))
+            if payment >= record["biaya"]:
+                print("Terima Kasih")
+            else:
+                print("Pembayaran tidak cukup")
+            return
 
-            item_name = selected_item['nama']
-            item_price = selected_item['harga']
-            item_stock = selected_item['stock']
-            jumlah_item = int(input("Masukkan Jumlah : "))
-            if jumlah_item > item_stock :
-                print("\nGagal Menambahkan (Stok Habis)")
-            cart_item = {"item_no":item_id,"type":type,"nama":item_name,"harga":item_price,"jumlah":jumlah_item}
-            cart.append(cart_item)
-        except IndexError:
-            print("\nItem Tidak Terdaftar")  
+    print("Plat kendaraan tidak ditemukan atau sudah keluar")
+
+
+def view_parking_transactions(parking_database, ADMIN_PIN):
+    pin = input("Enter Admin PIN: ")
+    if pin == ADMIN_PIN:
+        for record in parking_database:
+            print(record)
+    else:
+        print("Invalid PIN")
