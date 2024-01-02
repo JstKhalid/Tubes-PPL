@@ -1,0 +1,62 @@
+Start;
+Inisialisasi  data_parkir, secret_key;
+inisialisasi satuan_bulat,tarif_per_detik,denda_4_menit,denda_6_menit,batas_pertama,batas_kedua;
+While True :
+ Display menu(masuk,keluar,admin,tutup);
+ Input menu;
+ if menu == 1:
+  Input plat;
+  waktu_masuk = currrent time;
+  data_parkir[plat] = {"waktu_masuk": waktu_masuk}
+  Diplay parkir_data;
+ elif menu == 2:
+  Input plat;
+  If plat in data_parkir:
+   waktu_keluar = current time;
+   waktu_masuk = data_parkir[plat]["waktu_masuk"];
+   durasi_detik = (waktu_keluar - waktu_masuk).total_seconds();
+   if durasi >= satuan_bulat:
+     if (durasi_detik % satuan_bulat != 0) and (durasi_detik % satuan_bulat >14):
+      durasi_menit = ceil(durasi_detik/satuan_bulat);
+     else:
+      durasi_menit = floor(durasi_detik/satuan_bulat);
+     endif;
+   else:
+     durasi_menit = ceil(durasi_detik/satuan_bulat);
+   endif;
+   biaya = durasi_menit * tarif_per_detik;
+   if batas_pertama < durasi_menit < batas_kedua:
+    biaya += biaya * denda_4_menit; 
+   elif durasi_menit > batas_kedua:
+    biaya += biaya * denda_6_menit;
+   endif;
+   Display biaya;
+   While True:
+    pembayaran = Input("bayar");
+    if pembayaran < biaya:
+     Display "uang tidak cukup";
+    else:
+     break;
+    endif;
+   Endwhile;
+   Display "Terimakasih"
+   Del data_parkir[plat]
+  else:
+   Display "Kendaraan tidak terdaftar di area parkir."
+  endif;
+ elif menu==3:
+  pin = input("pin");
+  if pin == secret_key:
+   foreach data_parkir.items():
+    display data_parkir[0],data_parkir[1];
+  else:
+   Display "Pin Salah!";
+  endif;
+ elif menu==4:
+  break;
+ else;
+  Display Value Error;
+ endif;
+endwhile;
+   
+	
